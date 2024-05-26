@@ -1,0 +1,17 @@
+localstack:
+  endpoint: http://localhost:4566
+
+app:
+  aws:
+    region: sa-east-1
+    endpoint-url: http://localhost:4566
+    accessKeyId: localstack
+    secretKey: localstack
+    sqs:
+      queue:
+        demo:
+          name: demo-sqs
+    sns:
+      topic:
+        demo:
+          arn: arn:aws:sns:sa-east-1:000000000000:demo-sns

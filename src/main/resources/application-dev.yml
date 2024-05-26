@@ -1,0 +1,11 @@
+app:
+  aws:
+    region: sa-east-1
+    sqs:
+      queue:
+        demo:
+          name: demo-sqs
+    sns:
+      topic:
+        demo:
+          arn: arn:aws:sns:sa-east-1:897775339185:demo-sns

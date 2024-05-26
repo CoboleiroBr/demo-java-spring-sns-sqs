@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-java-spring-sns-sqs-api
+  namespace: demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: demo-java-spring-sns-sqs-pod
+  strategy:
+    rollingUpdate: # Estratégia para Zero Downtime
+      maxSurge: 1 # número máximo de pods a mais do que o número desejado de réplicas que podem ser criados durante a atualização
+      maxUnavailable: 0 # garante que pelo menos uma réplica do aplicativo esteja sempre disponível durante a atualização
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+      labels:
+        app: demo-java-spring-sns-sqs-pod
+    spec:
+      serviceAccountName: demo-java-spring-sns-sqs-sa
+      containers:
+        - name: demo-java-spring-sns-sqs-service-app
+          image: 897775339185.dkr.ecr.sa-east-1.amazonaws.com/demo/demo-java-spring-sns-sqs-service-app:fee343b
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              memory: "300Mi"
+              cpu: "100m"
+            limits:
+              memory: "430Mi"
+              cpu: "350m"
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "dev"
+          livenessProbe: # reinicia a pod caso o /health não responder corretamente
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90 # Tempo inicial para a pod receber a primeira tentativa do /health
+            periodSeconds: 30 # Verificará a cada X segundos após o "initialDelaySeconds"
+            timeoutSeconds: 5 # Tempo para a pod responder depois da requisição
+            failureThreshold: 3 # Será feito 3 tentativas (peridiocidade de tempo entre cada uma é definido no "periodSeconds")
+          readinessProbe: # não encaminha o tráfego para esta pod caso o /health não responder corretamente
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 90 # Tempo inicial para a pod receber a primeira tentativa do /health
+            periodSeconds: 30 # Verificará a cada X segundos após o "initialDelaySeconds"
+            timeoutSeconds: 5 # Tempo para a pod responder depois da requisição
+            failureThreshold: 3 # Será feito 3 tentativas (peridiocidade de tempo entre cada uma é definido no "periodSeconds")

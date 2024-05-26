@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-java-spring-sns-sqs
+  namespace: demo
+spec:
+  selector:
+    app: demo-java-spring-sns-sqs-pod
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: connector-hub-ingress
+  namespace: demo
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/enable-cors: "false"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS, DELETE, PATCH"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-credentials: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "6000"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "6000"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "6000"
+    nginx.ingress.kubernetes.io/body-size: "0"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.org/client-max-body-size: "35M"
+    nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  rules:
+    - host: demo-java-spring-sns-sqs.dev.demo.com
+      http:
+        paths:
+          - backend:
+              serviceName: demo-java-spring-sns-sqs-service
+              servicePort: 80
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: demo-java-spring-sns-sqs-service-sa
+  namespace: demo
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::897775339185:role/eks-demo-java-spring-sns-sqs
