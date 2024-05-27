@@ -22,7 +22,6 @@ jobs:
         with:
           registries: ${{ secrets.ECR_REGISTRY }}
           mask-password: true
-          region: sa-east-1
 
       - name: Build, tag, and push the Docker image to Amazon ECR
         env:
