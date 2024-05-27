@@ -26,6 +26,9 @@ jobs:
         with:
           mask-password: 'true'
 
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
       - name: Gradlew build
         run: |
           ./gradlew build 
