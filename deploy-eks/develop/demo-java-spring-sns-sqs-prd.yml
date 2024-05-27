@@ -37,7 +37,7 @@ spec:
               cpu: "350m"
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: "dev"
+              value: "prd"
           livenessProbe: # reinicia a pod caso o /health não responder corretamente
             httpGet:
               path: /actuator/health/liveness
