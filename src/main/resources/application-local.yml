@@ -3,7 +3,6 @@ localstack:
 
 app:
   aws:
-    region: sa-east-1
     endpoint-url: http://localhost:4566
     accessKeyId: localstack
     secretKey: localstack

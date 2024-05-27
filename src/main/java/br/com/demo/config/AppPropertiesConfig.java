@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppPropertiesConfig {
 
-    @Value("${app.aws.region}")
+    @Value("${app.aws.region:sa-east-1}")
     private String awsRegion;
 
     @Value("${app.aws.endpoint-url:}")

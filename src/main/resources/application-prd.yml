@@ -1,6 +1,5 @@
 app:
   aws:
-    region: sa-east-1
     sqs:
       queue:
         demo:
