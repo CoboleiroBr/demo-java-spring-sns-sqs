@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppPropertiesConfig {
 
-    @Value("${app.aws.region:sa-east-1}")
+    @Value("${app.aws.region:}")
     private String awsRegion;
 
     @Value("${app.aws.endpoint-url:}")
@@ -20,9 +20,9 @@ public class AppPropertiesConfig {
     @Value("${app.aws.secretKey:}")
     private String awsSecretKey;
 
-    @Value("${app.aws.sqs.queue.demo.name}")
+    @Value("${app.aws.sqs.queue.demo.name:}")
     private String awsSqsQueueDemoName;
 
-    @Value("${app.aws.sns.topic.demo.arn}")
+    @Value("${app.aws.sns.topic.demo.arn:}")
     private String snsTopicDemoArn;
 }

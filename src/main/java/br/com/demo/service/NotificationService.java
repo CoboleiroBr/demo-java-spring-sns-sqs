@@ -1,8 +1,6 @@
 package br.com.demo.service;
 
 import br.com.demo.config.AppPropertiesConfig;
-/*import com.amazonaws.services.sns.AmazonSNS;
-import com.amazonaws.services.sns.model.PublishRequest;*/
 import br.com.demo.controller.request.MessageRequest;
 import br.com.demo.util.JsonUtils;
 import lombok.RequiredArgsConstructor;
