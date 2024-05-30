@@ -7,4 +7,4 @@ app:
     sns:
       topic:
         demo:
-          arn: arn:aws:sns:sa-east-1:897775339185:demo-sns
+          arn: arn:aws:sns:sa-east-1:767397829399:demo-sns
