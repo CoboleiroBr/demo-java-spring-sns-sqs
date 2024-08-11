@@ -65,7 +65,11 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Listar arquivos em build/libs
-      run: ls -la build/libs
+      run: |
+        echo "Listando o conteúdo do diretório build..."
+        ls -la build/
+        echo "Listando o conteúdo do diretório build/libs..."
+        ls -la build/libs/
   
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
